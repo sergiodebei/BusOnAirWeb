@@ -69,19 +69,12 @@
 						</span>
 					</div><!-- /input-group -->
 				</div><!-- /search-block -->
+				
+
+
 				<div class="main-menu">
 					<ul>
-<!-- 						<li class="">
-							<a href="#">
-								<span class="menu-icon">
-									<i class="fa fa-desktop fa-lg"></i> 
-								</span>
-								<span class="text">
-									Dashboard
-								</span>
-								<span class="menu-hover"></span>
-							</a>
-						</li> -->
+						<!-- /Trip planner -->
 						<li class="openable">
 							<a href="#">
 								<span class="menu-icon">
@@ -94,7 +87,6 @@
 							</a>
 							<ul class="submenu">
 								<li>
-
 									<div class="search-block">
 									<div class="input-group">
 										<span class="input-group-btn">
@@ -108,14 +100,24 @@
 										</span>
 										<input type="text" placeholder="search here..." class="form-control input-sm">
 									</div><!-- /input-group -->
-
-
-
-
+									<div class="form-group">
+   										on
+   										<select class="form-control" id="stato" style="width: 64%">
+   											<option>lunedi</option>
+										    <option>martedi</option>
+										    <option>mercoledi</option>
+										    <option>giovedi</option>
+										    <option>venerdi</option>
+										    <option>sabato</option>
+									   </select>
+   										<button class="btn btn-primary" type="submit" style="margin-top: 5px;">Go</button>
+   									</div>
 									</div><!-- /search-block -->
 								</li>
 							</ul>
 						</li>
+
+						<!-- /Bus Routes -->
 						<li class="openable">
 							<a href="#">
 								<span class="menu-icon">
@@ -127,14 +129,18 @@
 								<span class="menu-hover"></span>
 							</a>
 							<ul class="submenu">
-								<li><a href="ui_element.html"><span class="submenu-label">1</span></a></li>
-								<li><a href="button.html"><span class="submenu-label">2</span></a></li>
-								<li><a href="tab.html"><span class="submenu-label">3</span></a></li>
-								<li><a href="nestable_list.html"><span class="submenu-label">4</span></a></li>
+								<li>
+									<div class="search-block">
+										<input type="text" placeholder="search here..." class="form-control input-sm">
+									</div><!-- /search-block -->
+								</li>	
+								<li><a href=""><span class="submenu-label">M11 Terminal</span></a></li>
+								</li>
+								<li><a href=""><span class="submenu-label">M6 Paganica</span></a></li>
 							</ul>
 						</li>
-						
-						<li>
+						<!-- /Information -->
+						<li class="openable">
 							<a href="#">
 								<span class="menu-icon">
 									<i class="fa fa-clock-o fa-lg"></i> 
@@ -144,16 +150,18 @@
 								</span>
 								<span class="menu-hover"></span>
 							</a>
+							<ul class="submenu">
+								<li>
+									<div class="search-block"><p>About Us</p></div></li>
+							</ul>	
 						</li>
-
-
 					</ul>
 				</div><!-- /main-menu -->
 			</div><!-- /sidebar-inner -->
 		</aside>
 
 		<div id="main-container">			
-		<div id="map"></div>
+			<div id="map"></div>
 		</div><!-- /main-container -->
 
 			
@@ -175,12 +183,12 @@
 
 	<!-- Bootstrap -->
     <script src="js/lib/bootstrap.js"></script>
-   
+
 	<!-- mystyle -->
 	<script src="js/lib/mystyle.js"></script>
 
 	<!-- Modernizr -->
-	<script src="js/lib/modernizr-min.js"></script>
+	<script src="js/lib/modernizr.min.js"></script>
 	
   </body>
 

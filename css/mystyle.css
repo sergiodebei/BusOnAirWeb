@@ -534,7 +534,6 @@ aside .main-menu .alert {
 #wrapper {
   position: relative;
   overflow: hidden;
-  min-height: 800px;
   background-color: #f9f9f9;
 }
 @media (min-width: 768px) {
@@ -583,7 +582,7 @@ aside .main-menu .alert {
     display: none;
   }
   #wrapper.sidebar-mini aside .sidebar-inner .main-menu > ul > li:hover .submenu {
-    display: block;
+    display: none;
     animation: fadeIn 0.4s ease;
     -webkit-animation: fadeIn 0.4s ease;
     -moz-animation: fadeIn 0.4s ease;
@@ -649,9 +648,8 @@ aside .main-menu .alert {
   #wrapper.sidebar-mini aside .sidebar-inner .alert {
     display: none;
   }
-  #wrapper.sidebar-mini #main-container,
-  #wrapper.sidebar-mini footer {
-    margin-left: 90px;
+  #wrapper.sidebar-mini #main-container{
+    margin-left: 0px;
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -672,8 +670,7 @@ aside .main-menu .alert {
     left: 0;
     right: -194px;
   }
-  #wrapper.sidebar-display #main-container,
-  #wrapper.sidebar-display footer {
+  #wrapper.sidebar-display #main-container{
     left: 194px;
     right: -194px;
     transition: all 0.5s ease;
@@ -693,9 +690,10 @@ ul {
 
 #main-container {
   position: relative;
-  min-height: 800px;
-  padding-top: 45px;
-  margin-left: 194px;
+  bottom: 0px;
+  margin-top: 45px;
+  min-height: 500px;
+  margin-left: 0px;
   transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -730,7 +728,7 @@ ul {
 }
 @media (min-width: 768px) and (max-width: 868px) {
   #main-container {
-    margin-left: 90px;
+    margin-left: 0px;
     transition: margin-left 0.5s ease;
     -webkit-transition: margin-left 0.5s ease;
     -moz-transition: margin-left 0.5s ease;
@@ -754,9 +752,7 @@ ul {
 
 #map { 
     width: 100%;
-    height:100%;
-    position:absolute;
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
+    height:92%;
+    position: fixed;
 }
+

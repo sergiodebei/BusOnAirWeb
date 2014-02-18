@@ -4,16 +4,18 @@ $(function	()	{
 	//Collapsible Sidebar Menu
 	$('.openable > a').click(function()	{
 		
-		if(!$('#wrapper').hasClass('sidebar-mini'))	{
-			if( $(this).parent().children('.submenu').is(':hidden') ) {
-				$(this).parent().siblings().removeClass('open').children('.submenu').slideUp();
-				$(this).parent().addClass('open').children('.submenu').slideDown();
-			}
-			else	{
-				$(this).parent().removeClass('open').children('.submenu').slideUp();
-			}
+		if(!$('#wrapper').hasClass('sidebar-mini'))	
+		{}
+		else{
+			$('#wrapper').removeClass('sidebar-mini');
 		}
-		
+		if( $(this).parent().children('.submenu').is(':hidden') ) {
+			$(this).parent().siblings().removeClass('open').children('.submenu').slideUp();
+			$(this).parent().addClass('open').children('.submenu').slideDown();
+		}
+		else	{
+			$(this).parent().removeClass('open').children('.submenu').slideUp();
+		}
 		return false;
 	});
 		
