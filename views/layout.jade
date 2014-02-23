@@ -1,7 +1,7 @@
 doctype html
 html
   include inc/header
-
+  include inc/scripts
   body.overflow-hidden
     #wrapper.sidebar-mini
       #top-nav.fixed.skin-6
@@ -9,8 +9,7 @@ html
           span BusOnAir
           span.text-toggle
           //
-          brand
-
+            brand
         button#sidebarToggle.navbar-toggle.pull-left(type='button')
           span.icon-bar
           span.icon-bar
@@ -72,20 +71,20 @@ html
                   li
                     a(href='')
                       span.submenu-label M11 Terminal
-              li
-                a(href='')
-                  span.submenu-label M6 Paganica
-            li.openable
-              a(href='#')
-                span.menu-icon
-                  i.fa.fa-clock-o.fa-lg
-                span.text
-                  | Information
-                span.menu-hover
-              ul.submenu
-                li
-                  .search-block
-                    p About Us
+                  li
+                    a(href='')
+                      span.submenu-label M6 Paganica
+              li.openable
+                a(href='#')
+                  span.menu-icon
+                    i.fa.fa-clock-o.fa-lg
+                  span.text
+                    | Information
+                  span.menu-hover
+                ul.submenu
+                  li
+                    .search-block
+                      p About Us
       #main-container
         #map
 
