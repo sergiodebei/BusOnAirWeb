@@ -1,7 +1,6 @@
 doctype html
 html
   include inc/header
-  include inc/scripts
   body.overflow-hidden
     #wrapper.sidebar-mini
       #top-nav.fixed.skin-6
@@ -85,8 +84,9 @@ html
                   li
                     .search-block
                       p About Us
-      #main-container
-        #map
+      block append content
+
+  include inc/scripts
 
 
 

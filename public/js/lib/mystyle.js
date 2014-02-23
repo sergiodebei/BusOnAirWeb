@@ -74,7 +74,10 @@ $(function	()	{
 			$('aside').removeClass('fixed');
 		}
 	});
-	
+
+
+	$("#main-container").css("height",$(window).height() -45+"px");
+
 
 
 });
