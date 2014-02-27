@@ -5,14 +5,17 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , url = require('url');
+ 
+
 
 var app = express();
-
+var neo4jURL = 'http://localhost:7474'
 // Configuration
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -33,13 +36,41 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+
+
+
 // Routes
 
 app.get('/', routes.index);
 app.get('/home', routes.home);
-app.get('/about', routes.about);
+
+app.get(/\/directions\/([^\/]+)\/?/, function (req, res) {
+   http.get(neo4jURL+"/directions/"+req.params[0], function(response) {
+    console.log("Got response: " + response.statusCode);
+    response.pipe(res);
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
+    
+    res.send(e.message)
+  });
+});
+
+app.get(/\/routesearch\/([^\/]+)\/?/, function (req, res) {
+   http.get(neo4jURL+"/routesearch/"+req.params[0], function(response) {
+    console.log("Got response: " + response.statusCode);
+    response.pipe(res);
+  }).on('error', function(e) {
+    console.log("Got error: " + e.message);
+    
+    res.send(e.message)
+  });
+});
+
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
+ 
+ 
