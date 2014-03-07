@@ -1,6 +1,7 @@
 
 $(function	()	{
 
+var baseURL = 'http://localhost:8888';
 	//Collapsible Sidebar Menu
 	$('.openable > a').click(function()	{
 		
@@ -78,7 +79,20 @@ $(function	()	{
 
 	$("#main-container").css("height",$(window).height() -45+"px");
 
-
+$.getJSON( baseURL + "/routes/getall", function( data ) {
+$.each( data.routelist, function( key, val ) {
+  $.getJSON( baseURL + val, function( datata ) {
+    $.getJSON( baseURL + datata.towards, function( datatabo ) {
+        item.push({
+          id : datata.id,
+          name : datata.line,
+          direction : datatabo.name
+        });
+        $("<li><a href=''><span class='submenu-label'>" + datata.line + " " + datatabo.name + "</span></a></li>").appendTo($('#mmmmmmmmmmmmmmmm'))
+      });
+    });
+  });
+});
 
 });
 

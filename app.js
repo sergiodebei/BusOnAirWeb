@@ -7,12 +7,65 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , url = require('url');
- 
 
 
 var app = express();
-var neo4jURL = 'http://localhost:7474';
+var baseURL = 'http://localhost:8888';
+var neo4jURL = 'http://localhost:7474/plugin';
 var debug = require('debug')('boa');
+
+
+
+
+
+// var item = [];
+// var routes = [];
+
+// $.getJSON( neo4jURL + "/routes/getall", function( data ) {
+//   $.each( data.routelist, function( key, val ) {
+//     $.getJSON( neo4jURL + val, function( datata ) {
+//       var from;
+//       var to;
+
+//       $.getJSON( neo4jURL + datata.from, function( datatabo ) {
+//         from = {
+//           id : datatabo.id,
+//           name : datatabo.name,
+//           lat : datatabo.latLon.lat,
+//           lon : datatabo.latLon.lon
+//         };
+//         console.log(from);
+//       });
+
+//       $.getJSON( neo4jURL+datata.towards, function( datatabo ) {
+//         to = {
+//           id : datatabo.id,
+//           name : datatabo.name,
+//           lat : datatabo.latLon.lat,
+//           lon : datatabo.latLon.lon
+//         };
+//       });
+
+//       item.push({
+//         id : datata.id,
+//         name : datata.line,
+//         from : from,
+//         toward : to
+//       });
+
+//     });
+//   });
+// });
+
+// mettere id 
+
+// var item = [];
+// var x = $('#start').val();
+
+// $.getJSON( "http://nominatim.openstreetmap.org/search?format=json&q=" + x, function( data ) {
+//   console.log(data[0].lat,data[0].lon)
+// });
+
 
 // Configuration
 
@@ -39,36 +92,33 @@ app.configure('production', function(){
 });
 
 
-
+// middleware prima del router
+app.use(function (){
+  var rex = new RegExp("\/((directions)|(stations)|(routes)).*");
+ 
+  return function (req, res, next) {
+    var match = req.url.match(rex);
+    if (match !== null) {
+      http.get(neo4jURL + req.url, function(response) {
+        debug('got response for ' + req.url);
+        res.set('Content-Type', 'application/json');
+        response.pipe(res); response.once('and', next);
+      }).on('error', function (err) {
+        debug(err.message);
+        next(err);
+      })
+    } else {
+      next(); 
+    }
+  }
+}());
 
 // Routes
 
 app.get('/', routes.index);
 app.get('/home', routes.home);
 
-app.get('/directions/*', function (req, res, next) {
-  var url = neo4jURL + '/directions/' + req.params[0];
-  http.get(neo4jURL + req.url, function(response) {
-    debug('got response for ' + req.url);
-    response.pipe(res);
-  }).on('error', function (err) {
-    debug(err.message);
-    // catch di 404 e 500, next passa il testimone al prossimo middleware o route
-    next(err);
-  });
-});
 
-app.get('/routesearch/*', function (req, res, next) {
-  var url = neo4jURL + '/routesearch/' + req.params[0];
-  http.get(neo4jURL + req.url, function(response) {
-    debug('got response for ' + req.url);
-    response.pipe(res);
-  }).on('error', function (err) {
-    debug(err.message);
-    // catch di 404 e 500, next passa il testimone al prossimo middleware o route
-    next(err);
-  });
-});
 
 
 // penultimo middleware
@@ -87,3 +137,4 @@ app.use(function(err, req, res, next) {
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+ 
