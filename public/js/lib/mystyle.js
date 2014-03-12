@@ -1,7 +1,6 @@
 
 $(function	()	{
 
-var baseURL = 'http://localhost:8888';
 	//Collapsible Sidebar Menu
 	$('.openable > a').click(function()	{
 		
@@ -67,33 +66,98 @@ var baseURL = 'http://localhost:8888';
 	});
 	
 	//fixed Sidebar
-	$('#fixedSidebar').click(function()	{
-		if($(this).prop('checked'))	{
-			$('aside').addClass('fixed');
-		}	
-		else	{
-			$('aside').removeClass('fixed');
-		}
-	});
-
-
-	$("#main-container").css("height",$(window).height() -45+"px");
-
-$.getJSON( baseURL + "/routes/getall", function( data ) {
-$.each( data.routelist, function( key, val ) {
-  $.getJSON( baseURL + val, function( datata ) {
-    $.getJSON( baseURL + datata.towards, function( datatabo ) {
-        item.push({
-          id : datata.id,
-          name : datata.line,
-          direction : datatabo.name
-        });
-        $("<li><a href=''><span class='submenu-label'>" + datata.line + " " + datatabo.name + "</span></a></li>").appendTo($('#mmmmmmmmmmmmmmmm'))
-      });
+        $('#fixedSidebar').click(function()     {
+            if($(this).prop('checked'))     {
+                    $('aside').addClass('fixed');
+            }
+            else    {
+                    $('aside').removeClass('fixed');
+            }
     });
-  });
-});
 
+
+    $("#main-container").css("height",$(window).height() -45+"px");
+
+	
+	var item = [];
+
+	 $.each(routes.routesObjectsList, function( key, datata ) {
+			var from;
+			var to;
+			for (var i in stations.stationsObjectsList) {
+				var station = stations.stationsObjectsList[i];
+				if (station['id'] == datata.from) {
+					from = {
+		     			id : station.id,
+		     			name : station.name,
+						lat : station.latLon.lat,
+						lon : station.latLon.lon
+		     		};
+				}
+				if (station['id'] == datata.towards) {
+					to = {
+		     			id : station.id,
+		     			name : station.name,
+						lat : station.latLon.lat,
+						lon : station.latLon.lon
+		     		};
+				}
+			};
+			item.push({
+	 			id : datata.id,
+	 			name : datata.line,
+	 			from : from,
+				toward : to
+	 		});
+	 		$("<li><a href=''><span class='submenu-label'>" + datata.line + " " + from.name + "</span></a></li>").appendTo($('#myline'))
+	  });
+
+
+
+	 $(function() {
+
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "AppleScript2",
+      "AppleScript3",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdF",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+        
+        
+    $("#spotlight").autocomplete({
+		source: availableTags,
+		appendTo: $("#myline")
+	});
+	
+	$("#spotlight").data( "ui-autocomplete" )._renderMenu = function( ul, items ) {
+		var that = this;		
+		ul.attr("class", "nav nav-pills nav-stacked");
+		$.each( items, function( index, item ) {
+			that._renderItemData( ul, item );
+		});
+	};	    
+    
+});
 });
 
 

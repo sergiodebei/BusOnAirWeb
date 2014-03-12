@@ -94,7 +94,7 @@ app.configure('production', function(){
 
 // middleware prima del router
 app.use(function (){
-  var rex = new RegExp("\/((directions)|(stations)|(routes)).*");
+  var rex = new RegExp("\/((directions)|(stations)|(routes)|(runs)).*");
  
   return function (req, res, next) {
     var match = req.url.match(rex);
