@@ -8,9 +8,9 @@ var map = L.map("map", {zoomControl: false});
 // create the tile layer with correct attribution
 var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib='Map data © OpenStreetMap contributors';
-var osm = new L.TileLayer(osmUrl, {minZoom: 8, maxZoom: 20, attribution: osmAttrib});	
+var osm = new L.TileLayer(osmUrl, {minZoom: 14, maxZoom: 20, attribution: osmAttrib});	
 
-//Extend the Default marker class
+// Extend the Default marker class
 var RedIcon = L.Icon.Default.extend({
 	options: {
 		iconUrl: 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png' 
@@ -26,29 +26,49 @@ var redIcon = new RedIcon();
 //   });
 // });
 
-var marker = L.marker([42.345, 13.400],{icon:redIcon, draggable:true}).addTo(map);
+var markers = [];
 
-marker.on('dragend', function(event) {
-    var marker = event.target;  // you could also simply access the marker through the closure
-    var result = marker.getLatLng();  // but using the passed event is cleaner
-    $.getJSON( baseURL + "/stations/getneareststations?lat=" + result.lat + "&lon=" + result.lng + "&range=900", function( data ) {
-		$.each( data.stationlist, function( key, val ) {
-			$.getJSON( baseURL + val, function( datata ) {
-					L.marker([datata.latLon.lat, datata.latLon.lon],{title : datata.name, alt : datata.url }).addTo(map);
+function onLocationFound(e) {
+   var radius = 150;
+
+   L.marker(e.latlng,{icon:redIcon,draggable:true})
+		.addTo(map)
+		.bindPopup("You are within " + radius + " meters from this point").openPopup()
+		.on('dragend', function(event) {
+		    var marker = event.target;  // you could also simply access the marker through the closure
+		    var result = marker.getLatLng();  // but using the passed event is cleaner
+		    $.getJSON( baseURL + "/stations/getneareststations?lat=" + result.lat + "&lon=" + result.lng + "&range=900", function( data ) {
+				$.each( data.stationlist, function( key, val ) {
+					$.getJSON( baseURL + val, function( datata ) {
+							markers [key] = L.marker([datata.latLon.lat, datata.latLon.lon],{title : datata.name, alt : datata.url });
+					});
+				});
 			});
+			
+			var layer = L.layerGroup(markers).addTo(map);	
+
 		});
-	});
+   	//L.circle(e.latlng, radius).addTo(map);
+}
 
-});
+map.on('locationfound', onLocationFound);
 
 
 
 
-map.setView([42.351, 13.389], 15);
+
+
+map.locate({setView: true, minZoom: 14, maxZoom: 16});
 map.addLayer(osm);
 
 map.addControl( L.control.zoom({position: 'topright'}) );
 
+// map.addControl(L.control.locate({
+// 	position: 'topright',
+// 	locateOptions: {
+// 		maxZoom: 10
+// 	}
+// }));
 
 // map.addControl( L.myIcon('icon', {position: 'topright'}) );
 
