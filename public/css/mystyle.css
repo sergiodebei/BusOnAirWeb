@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);
 #top-nav {
   height: 45px;
   padding-right: 10px;
@@ -399,9 +398,9 @@ aside .main-menu > ul > li .dropdown-menu {
 }
 @media (min-width: 768px) {
   aside .main-menu > ul > li .dropdown-menu {
-    right: -160px;
-    left: auto;
-    top: -5px;
+    /*right: -160px;*/
+/*    left: auto;
+    top: -5px;*/
   }
 }
 @media (max-width: 767px) {
@@ -691,7 +690,7 @@ ul {
 #main-container {
   position: relative;
   bottom: 0px;
-  margin-top: 45px; 
+  margin-top: 45px;
   margin-left: 0px;
   transition: all 0.5s ease;
   -webkit-transition: all 0.5s ease;
@@ -754,50 +753,252 @@ ul {
     height:100%;
     position: fixed;
 }
-    
 .leaflet-bottom { 
+
     margin-bottom: 45px;
+
 }
 
-/* Attribuisco la classe relative al form in modo da poter 
-posizionare il menu autocomplete in relazione ad esso
-----------------------------------*/
+.form-control.input-sm {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
+}
 
-#myline{
+body{
+  font-family: "Lato";
+}
+
+.btn-sm1{
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+.search-block{
+  padding-top: 0px;
+}
+
+.form-group {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.search-block p{
+  padding-left: 20px;
+}
+#myline > li.li-search.disable-route {
+  display: none;
+}
+
+.form-control.input-sm.error{
+  background: #CE5757 !important;
+}
+
+/* Status Panel
+ ***************************************************************************/
+
+#statusPanel p {
+  border: 1px solid #BBBBBB;
+  padding: 5px;
+  color: red;
+}
+
+/* Directions Panel
+ ***************************************************************************/
+
+
+.stage {
+  margin: 0 30px 0 20px;
+}
+
+.stage:hover {
+  background: #F3F3F3;
+  cursor:pointer;
+  cursor:hand;
+}
+
+ui-state-hover{
+}
+
+.stage:active {
+  background: #d0d0d0;
+}
+
+.walk {
+  padding: 0px 0px 0px 10px;
+  border-left: 8px solid #1FB19A;
+}
+
+.walk small {
+  padding: 0px 0px 0px 5px;
+  color: #1FB19A;
+  font-size: 14px;
+}
+
+.walk p {
+  padding: 5px 0px 5px 20px;
+  font-size: 14px;
+}
+
+.bus {
+  padding: 0px 0px 0px 10px;
+  border-left: 8px solid #007EFF;
+}
+
+.bus small {
+  padding: 0px 0px 0px 5px;
+  color: #007EFF;
+  font-size: 14px;
+}
+
+.bus p {
+  padding: 5px 0px 5px 20px;
+  font-size: 14px;
+}
+
+/* Direction Tabs
+ ***************************************************************************/
+
+#tabstitle p {
+  float: left;
+  padding: 0;
+}
+
+.ui-tabs {
+  zoom: 1;
+}
+.ui-tabs .ui-tabs-nav {
+  list-style: none;
   position: relative;
+  padding: 2px 2px 0;
+  overflow: hidden;
+  top: 1px;
+  height: 30px;
 }
-  
-/* Imposto gli stili del menu dell'autocomplete in modo da 
-permettere a jQuery UI di spostalo a piacimento in base alla 
-posizione del campo di testo
-----------------------------------*/
 
-#myline ul{
-    position: absolute;
-    top: 0;
-    left: 0; 
-    width: 100%;
-    max-height: 200px;
-    overflow: auto;   
-    z-index: 1;   
-    border:1px solid #DDDDDD;
-    border-radius: 6px;
-    background-color: white;
-    color: black;
-  }
+.ui-tabs .ui-tabs-nav li {
+  position: relative;
+  float: left;
+  border-top: 1px dashed #CCCCCC;
+  border-bottom-width: 0 !important;
+  margin: 0 5px -1px 5px;
+  background: #F3F3F3;
+}
 
-/* Siccome gli stili del jQuery UI non sono stati aggiunti,
-nacondo la classe dell'helper
-----------------------------------*/
-span.ui-helper-hidden-accessible{
+.ui-tabs .ui-tabs-nav li a {
+  float: left;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: black;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
+  padding-bottom: 1px;
+  border-left: 1px dashed #CCCCCC;
+  border-right: 1px dashed #CCCCCC;
+  border-bottom-width: 0;
+  background: white;
+}
+
+.ui-tabs .ui-tabs-panel {
+  display: block;
+  border-width: 0;
+  background: none;
+  border-top: 1px dashed #CCCCCC;
+  border-bottom: 1px dashed #CCCCCC;
+  position: relative;
+  min-height: 200px;
+  height: auto !important;
+  height: 200px;
+  padding: 10px;
+}
+
+.ui-tabs .ui-tabs-hide {
   display: none !important;
 }
-    
-/* Siccome non posso sovrascrivere lo stato del focus della
-selezione degli elementi nella lista, uso la classe del jQuery UI
-per modificarne gli stili
-----------------------------------*/
-.ui-state-focus {
-   color: #ffffff;
-   background-color: #428bca;
+
+.ui-tabs .ui-state-hover {
+  background: url("../images/ui-bg_glass_100_fdf5ce_1x400.html") repeat-x
+  scroll 50% 50% #FDF5CE;
+  border: 0px;
+  color: #333;
+}
+
+/*  Info
+ ***************************************************************************/
+
+.acc_container h4 {
+  border-bottom: 1px dashed #CCCCCC;
+  margin-top: 14px;
+  padding: 0 0 5px;
+  text-align: center;
+}
+ 
+#about {
+  margin: 0 10px 0 0px;
+  list-style-type: none;
+  margin-left: 23px;
+  margin-right: 24px;
+  background-color: rgb(137, 156, 185);
+  border-radius: 5px;
+}
+
+#about_in {
+  margin: 2px 2px 2px 5px;
+}
+
+#about p {
+    margin: 5px 0;
+    text-align: center;
+}
+
+.acc_container_dir h4 {
+  margin-top: 14px;
+  padding: 0 0 5px;
+  text-align: center;
+}
+
+
+/*  scrollbar
+ ***************************************************************************/
+
+/* Let's get this party started */
+::-moz-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgb(137, 156, 185); 
+    -moz-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+
+::-moz-scrollbar-thumb:window-inactive {
+  background: rgb(137, 156, 185); 
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgb(137, 156, 185); 
+}
+
+#myline {
+  height: 300px;
+  overflow-x: hidden;
+  min-height: 450px;
 }

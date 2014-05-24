@@ -5,7 +5,7 @@ html
     #wrapper.sidebar-mini
       #top-nav.fixed.skin-6
         a.brand(href='#')
-          span BusOnAir
+          span Bus On Air
           span.text-toggle
           //
             brand
@@ -13,6 +13,8 @@ html
           span.icon-bar
           span.icon-bar
           span.icon-bar
+      //
+        top-nav
       aside.fixed.skin-6
         .sidebar-inner.scrollable-sidebar
           .size-toggle
@@ -20,18 +22,14 @@ html
               span.icon-bar
               span.icon-bar
               span.icon-bar
-          .search-block
-            .input-group
-              input.form-control.input-sm(type='text', placeholder='search here...')
-              span.input-group-btn
-                button.btn.btn-default.btn-sm(type='button')
-                  i.fa.fa-search
           .main-menu
             ul
+              //
+                Trip planner 
               li.openable
                 a(href='#')
                   span.menu-icon
-                    i.fa.fa-file-text.fa-lg
+                    i.fa.fa-location-arrow.fa-lg
                   span.text
                     | Trip planner
                   span.menu-hover
@@ -40,70 +38,80 @@ html
                     .search-block
                       .input-group
                         span.input-group-btn
-                          button.btn.btn-default.btn-sm(type='button') A
-                        input.form-control.input-sm(type='text', placeholder='search here...')
+                          button.btn.btn-default.btn-sm.disabled(type='button') A
+                        input#nominatim1.form-control.input-sm.photon-input.nominatim(type='text', placeholder='search here...')
+                        ul.photon-autocomplete
+                      //
+                        input-group 
                       .input-group
                         span.input-group-btn
-                          button.btn.btn-default.btn-sm(type='button') B
-                        input.form-control.input-sm(type='text', placeholder='search here...')
-                      .form-group
-                        | on
-                        select#stato.form-control(style='width: 64%;')
-                          option lunedi
-                          option martedi
-                          option mercoledi
-                          option giovedi
-                          option venerdi
-                          option sabato
-                        button.btn.btn-primary(type='submit', style='margin-top: 5px;') Go
-              li.openable
-                a(href='#')
-                  span.menu-icon
-                    i.fa.fa-tag.fa-lg
-                  span.text
-                    | Bus Routes
-                  span.menu-hover
-                ul#myline.submenu
+                          button.btn.btn-default.btn-sm.disabled(type='button') B
+                        input#nominatim2.form-control.input-sm.photon-input.nominatim(type='text', placeholder='search here...')
+                        ul.photon-autocomplete
+                      //
+                        input-group 
+                      .form-group(style='margin-left: 30px;')
+                        select#stato.form-control
+                          option(value='1') Monday
+                          option(value='2') Tuesday
+                          option(value='3') Wednesday
+                          option(value='4') Thursday
+                          option(value='5') Friday
+                          option(value='6') Saturday
+                          option(value='0') Sunday
+                        .input-group.input-append.bootstrap-timepicker
+                          input#timepicker.form-control.input-sm.bootstrap-timepicker(type='text')
+                          span.input-group-btn.add-on
+                            button.btn.btn-default.btn-sm1(type='button')
+                              i.fa.fa-clock-o.fa-lg
+                        button#searchgo.btn.btn-primary(type='submit', style='margin-top: 5px; padding-left: 30px; padding-right: 30px; margin-left: 24px;') Go
+                ul#prova.submenu
                   li
-                    .search-block
-                      input#spotlight.form-control.input-sm(type='text', placeholder='search hasdsadere...')
-              li.openable
-                a(href='#')
-                  span.menu-icon
-                    i.fa.fa-clock-o.fa-lg
-                  span.text
-                    | Information
-                  span.menu-hover
-                ul.submenu
-                  li
-                    .search-block
-                      p About Us
-      block append content
+                    #statusPanel
+                    #directionsPanel
+                  //
+                    Bus Routes 
+                li.openable
+                  a(href='#')
+                    span.menu-icon
+                      i.fa.fa-tag.fa-lg
+                    span.text
+                      | Bus Routes
+                    span.menu-hover
+                  ul.submenu
+                    li
+                      .search-block
+                        input#spotlight.form-control.input-sm(type='text', placeholder='search here...')
+                  ul#myline.submenu
+                //
+                  Information 
+                li.openable
+                  a(href='#')
+                    span.menu-icon
+                      i.fa.fa-info-circle.fa-lg
+                    span.text
+                      | Information
+                    span.menu-hover
+                  ul.submenu
+                    li
+                      #about
+                        #about_in.acc_container
+                          h4.spacer developed by:
+                          p
+                            | Department of Information Engineering, Computer Science and Mathematics at Università degli Studi De L'Aquila.
+                      #about
+                        #about_in.acc_container
+                          h4.spacer people:
+                          p Ivano Malavolta
+                          p Francesco Gallo
+                          p Ludovico Iovino
+                          p Stefano Pace
+                          p Vasco Gallotti
+                          p Michele Flammini
+                          p Michele Rastelli
+                          p Sergio De Bei
+
+      #main-container
+        #map
 
   include inc/scripts
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
-
