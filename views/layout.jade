@@ -2,13 +2,13 @@ doctype html
 html
   include inc/header
   body.overflow-hidden
-    #wrapper.sidebar-mini
+    #wrapper
       #top-nav.fixed.skin-6
         a.brand(href='#')
           span Bus On Air
           span.text-toggle
-          //
-            brand
+        //
+          brand 
         button#sidebarToggle.navbar-toggle.pull-left(type='button')
           span.icon-bar
           span.icon-bar
@@ -17,11 +17,6 @@ html
         top-nav
       aside.fixed.skin-6
         .sidebar-inner.scrollable-sidebar
-          .size-toggle
-            a#sizeToggle.btn.btn-sm
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
           .main-menu
             ul
               //
@@ -50,7 +45,7 @@ html
                         ul.photon-autocomplete
                       //
                         input-group 
-                      .form-group(style='margin-left: 30px;')
+                      .form-group
                         select#stato.form-control
                           option(value='1') Monday
                           option(value='2') Tuesday
@@ -64,13 +59,13 @@ html
                           span.input-group-btn.add-on
                             button.btn.btn-default.btn-sm1(type='button')
                               i.fa.fa-clock-o.fa-lg
-                        button#searchgo.btn.btn-primary(type='submit', style='margin-top: 5px; padding-left: 30px; padding-right: 30px; margin-left: 24px;') Go
-                ul#prova.submenu
+                        button#searchgo.btn.btn-primary.extended(type='submit') Go
+                ul#indicazioni.submenu
                   li
                     #statusPanel
                     #directionsPanel
-                  //
-                    Bus Routes 
+                //
+                  Bus Routes 
                 li.openable
                   a(href='#')
                     span.menu-icon
@@ -81,7 +76,7 @@ html
                   ul.submenu
                     li
                       .search-block
-                        input#spotlight.form-control.input-sm(type='text', placeholder='search here...')
+                        input#spotlight.input-sm(type='text', placeholder='search here...')
                   ul#myline.submenu
                 //
                   Information 
@@ -98,7 +93,7 @@ html
                         #about_in.acc_container
                           h4.spacer developed by:
                           p
-                            | Department of Information Engineering, Computer Science and Mathematics at Università degli Studi De L'Aquila.
+                            | Department of Information Engineering, Computer Science and Mathematics at Universita' degli Studi De L'Aquila.
                       #about
                         #about_in.acc_container
                           h4.spacer people:
@@ -110,8 +105,11 @@ html
                           p Michele Flammini
                           p Michele Rastelli
                           p Sergio De Bei
-
+          //
+            main-menu 
+        //
+          Sidebar-inner 
       #main-container
         #map
-
+        
   include inc/scripts

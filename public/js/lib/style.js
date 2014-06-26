@@ -1,7 +1,6 @@
 
 $(function	()	{
 	var baseURL = 'http://localhost:8888';
-
 	ttttt = toa.toaObjectsList;
 	for (var it in ttttt) {
 		ddd = "";
@@ -18,11 +17,6 @@ $(function	()	{
 	//Collapsible Sidebar Menu
 	$('.openable > a').click(function()	{
 		
-		if(!$('#wrapper').hasClass('sidebar-mini'))	
-		{}
-		else{
-			$('#wrapper').removeClass('sidebar-mini');
-		}
 		if( $(this).parent().children('.submenu').is(':hidden') ) {
 			$(this).parent().siblings().removeClass('open').children('.submenu').slideUp();
 			$(this).parent().addClass('open').children('.submenu').slideDown();
@@ -44,53 +38,26 @@ $(function	()	{
 	
 		$('#wrapper').off("resize");
 	
-		$('#wrapper').toggleClass('sidebar-mini');
+		// $('#wrapper').toggleClass('sidebar-mini');
 		$('.main-menu').find('.openable').removeClass('open');
 		$('.main-menu').find('.submenu').removeAttr('style');
 	});
-	
-	if(!$('#wrapper').hasClass('sidebar-mini'))	{ 
-		if (Modernizr.mq('(min-width: 768px)') && Modernizr.mq('(max-width: 868px)')) {
-			$('#wrapper').addClass('sidebar-mini');
-		}
-		else if (Modernizr.mq('(min-width: 869px)'))	{
-			if(!$('#wrapper').hasClass('sidebar-mini'))	{
-			}
-		}
-	}
-	
-	$(window).resize(function() {
-		if (Modernizr.mq('(min-width: 768px)') && Modernizr.mq('(max-width: 868px)')) {
-			$('#wrapper').addClass('sidebar-mini').addClass('window-resize');
-			$('.main-menu').find('.openable').removeClass('open');
-			$('.main-menu').find('.submenu').removeAttr('style');
-		}
-		else if (Modernizr.mq('(min-width: 869px)'))	{
-			if($('#wrapper').hasClass('window-resize'))	{
-				$('#wrapper').removeClass('sidebar-mini window-resize');
-				$('.main-menu').find('.openable').removeClass('open');
-				$('.main-menu').find('.submenu').removeAttr('style');
-			}
-		}
-		else	{
-			$('#wrapper').removeClass('sidebar-mini window-resize');
-			$('.main-menu').find('.openable').removeClass('open');
-			$('.main-menu').find('.submenu').removeAttr('style');
-		}
-	});
-	
-	//fixed Sidebar
-        $('#fixedSidebar').click(function()     {
-            if($(this).prop('checked'))     {
-                    $('aside').addClass('fixed');
-            }
-            else    {
-                    $('aside').removeClass('fixed');
-            }
+
+	// SETTING INIZIALE
+	$('#indicazioni').addClass('activeblock');
+
+    $('li.openable').css({
+    	'max-height' : ($(window).height()- $('#top-nav').height()- (2*($('li.openable > a').height()+26)) - 10)+'px'
+    });
+    $(window).on('resize', function(){
+    	$('li.openable').css({
+	    	'max-height' : ($(window).height()- $('#top-nav').height()- (2*($('li.openable > a').height()+26)) - 10)+'px'
+	    });
     });
 
-
     $("#main-container").css("height",$(window).height() -45+"px");
+    // FINE SETTING INIZIALE
+
 
 	//autobus
 	item = [];
@@ -167,7 +134,6 @@ $(function	()	{
     		} else {
     			$('.li-search').addClass('disable-route');
     			$('.li-search-message').show();
-    			console.log("Non ci sono elementi")
     		}
     		
     	} else {
@@ -179,11 +145,11 @@ $(function	()	{
 //timepicker
 $('#timepicker').timepicker();
 
-//on blur from nominatim field the function fromto is called
-$('.nominatim').blur(fromto);
+// //on blur from nominatim field the function fromto is called
+// $('.nominatim').blur(fromto);
 
 
-
+//controlla che i due campi non siano vuoti
 $('#searchgo').click(function(){
 	if(nominatim1.value.length == 0){
 		$("#nominatim1").addClass("error");
@@ -197,6 +163,7 @@ $('#searchgo').click(function(){
 	else
 		$("#nominatim2").removeClass("error");
 });
+
 
 $('.li-search').click(function(e){
 		e.preventDefault();
@@ -230,20 +197,6 @@ function dateToInt() {
 	}
 	return (dayVal + (hours * 60 + minutes));
 }
-
-// setTimeout(
-//   function() 
-//   {$('#myline').slimScroll({
-//       alwaysVisible: true,
-//       railVisible: true,
-
-//       railColor: '#BECFE0'
-//   });
-//   }, 0);
-
-
-
-
 
 $(".photon-input").on('keyup',function(e){
 	var input = $(e.currentTarget)
@@ -279,10 +232,7 @@ $(".photon-input").on('keyup',function(e){
 						input.val($("strong", ev.currentTarget).attr('data-name'))
 					})
 					.appendTo($('ul.photon-autocomplete',that));
-			}
-			// console.log(data.features[i].properties.osm_id); 
-			// console.log(data.features[i].properties.name);
-			// console.log(data.features[i].properties.city);
+			};
 		}	
 		}	
 		$('ul.photon-autocomplete',that).show();
@@ -291,31 +241,16 @@ $(".photon-input").on('keyup',function(e){
 });
 
 
-
 $('.nominatim').blur(function(){
 	setTimeout(function(){$('.photon-autocomplete').hide();}, 200)
 		
 });
 
 
-// $('#item1').blur(function () {
-//     var item1var = $('#item1').val();
-//     $('#item2').val(item1var);
-// });
-
-
-// $('#photon-autocomplete').click(function(e){
-// 		e.preventDefault();
-// 		var aData = $(e.currentTarget).data("name");
-// 		debugger;
-// 		console.log(aData);
-// 	});
-
-
 var results = [];//global scope
 var resultsInterval = -1;
 
-function latlon(e, niente) {
+function latlon(e, niente, callback) {
 	var URL = 'http://nominatim.openstreetmap.org/search?q=';
    	var citta = ',+laquila';
   	var format = 'json';
@@ -330,38 +265,41 @@ function latlon(e, niente) {
 };
 
 
-$('#searchgo').click(function(e){
+$('#searchgo').click(function(){
+	searchgo();
+});
+
+
+gggg = $("<div id=\"containerSpin\"></div>").hide();
+map = $("#map").append(gggg);
+directions =$('#directionsPanel');
+searchgo = function() {
 	var time = dateToInt(timepicker);
 
 	clearInterval(resultsInterval);
 	results = []
-
-	var directions =$('#directionsPanel');
-	directions.empty();
-	var gggg = $("<div></div>");
-	gggg.css({
-		"height":"10px",
-		"width":"10px",
-		"textAlign":"center"
-	});
-	directions.append(gggg);
-	gggg.spin();
-  	latlon($("#nominatim1").val(), 0);
+	directions.empty();	
+	gggg.spin().show();
+	$('#indicazioni').addClass('activeblock');
+  	latlon($("#nominatim1").val(), 0);	
   	latlon($("#nominatim2").val(), 1);
-  	
   	resultsInterval = setInterval(function(){
   		if (results[0] && results[1] ) {
-  			clearInterval(resultsInterval);
+  			clearInterval(resultsInterval);	
   			if (results[0] == 'noresult' || results[1] == 'noresult') {
   				var directions =$('#directionsPanel');
 				directions.hide();
 				directions.empty();
   				$("#statusPanel").html("<p>No Path Found</p>")
 				$("#statusPanel").addClass("error");
+				showDirections(false);
+				// draw(false);
   			} else {
-  				var URL2 =  baseURL + "directions?lat1=";
+  				draw(results[0].lat, results[0].lon, results[1].lat, results[1].lon);
+
+  				var URL2 =  baseURL + "/directions?lat1=";
 				item = [];
-				$("<li class='' style='display:none'><a href><span class='submenu-label'>No results</span></a></li>").appendTo($('#prova'))			
+				$("<li class='' style='display:none'><a href><span class='submenu-label'>No results</span></a></li>").appendTo($('#indicazioni'))			
 				$.getJSON(URL2 + results[0].lat + "&lon1=" + results[0].lon + "&lat2="+ results[1].lat + "&lon2=" + results[1].lon + "&time=" + time, function(data) {
 					$('#directionsPanel .outstage').remove();
 					if (data == null) {
@@ -370,44 +308,95 @@ $('#searchgo').click(function(e){
 						directions.empty();
 						$("#statusPanel").html("<p>No Path Found</p>")
 						$("#statusPanel").addClass("error");
-						console.log("No Path Found");
+						showDirections(false);
+						// draw(false);
 					} else {
 						showDirections(data);
 					}
 				});
   			}
-
-  			
-  		}
+  			gggg.hide()
+  			$('#indicazioni').removeClass('activeblock');
+  		}	
   		
   	},300);
-	
-
-	
-});
+};
 
 
 function showDirections(json) {
 	var directions =$('#directionsPanel');
 	directions.hide();
 	directions.empty();
-    directions.prepend("<div id='about'><div id='about_in' class='acc_container_dir'><h4>directions</h4></div></div>");
+	if (json) {
+		directions.prepend("<div id='about'><div id='about_in' class='acc_container_dir'><h4>directions</h4></div></div>");	
+	}
 	$("#statusPanel").empty();
 	processWalks(json);
 	processRoutes(json);
+	processLine(json);
+	if (!json) return;
 	directions.slideDown();
+	
+}
+
+polis = [];
+markeris = undefined;
+function processLine(json) {
+	if(typeof stopLayer !== 'undefined') mappa.removeLayer(stopLayer);
+	if(typeof line !== 'undefined') mappa.removeLayer(line);
+	for (i in polis) {
+		mappa.removeLayer(polis[i]);
+	}
+	if(typeof markeris !== 'undefined') mappa.removeLayer(markeris);
+	if (!json) return;
+	polis = [];
+	var mkr = [];
+
+	var walks = json.directionslist[0].walks;
+	var routes = json.directionslist[0].routes;
+	var poli = undefined;
+	for (i = 0; i < walks.length; i++) {
+		var linePts = [];
+		linePts[0] = new L.LatLng( walks[ i ].latLon[ 0 ].lat, walks[ i ].latLon[ 0 ].lon );
+		linePts[1] = new L.LatLng( walks[ i ].latLon[ 1 ].lat, walks[ i ].latLon[ 1 ].lon );
+
+		poli = new L.Polyline( linePts, { color: 'rgb(31, 177, 154)', weight: 5, opacity: .7 } );
+		polis[polis.length] = poli;
+
+		mappa.addLayer(poli);
+
+		if (i != 0){
+			mkr [mkr.length] = L.marker([walks[ i ].latLon[ 0 ].lat, walks[ i ].latLon[ 0 ].lon],{icon:busSop});
+		}
+	}
+	for (i = 0; i < routes.length; i++) {
+		var linePts = [];
+		for( x in routes[ i ].latLon) {
+			linePts[x] = new L.LatLng( routes[ i ].latLon[ x ].lat, routes[ i ].latLon[ x ].lon );
+		}
+
+		poli = new L.Polyline( linePts, { color: 'rgb(0, 0, 255)', weight: 5, opacity: .7 } );
+		polis[polis.length] = poli;
+
+		mappa.addLayer(poli);
+
+		mkr [mkr.length] = L.marker([routes[ i ].latLon[ 0 ].lat, routes[ 0 ].latLon[ 0 ].lon],{icon:busSop});
+	}
+	markeris = L.layerGroup(mkr).addTo(mappa);
+	mappa.fitBounds(poli.getBounds());
 
 }
 
 function processWalks(json) {
+	if (!json) return;
 	var walks = json.directionslist[0].walks;
 	
 	for (i = 0; i < walks.length; i++) {
-		console.log(walks[i]);
 		var deptStation = (i==walks.length-1) ?  "to Destination" : json.directionslist[0].routes[i].deptStation;
 		var stg = $('<div id="stage'+i+'" class="outstage"></div>');
 		var walk = $('<div id="walk'+i+'" class="stage walk">'+
 			'<span class="directionsDisplayIcon directionsWalkIcon">'+
+			'<i class="iiii fa fa-male fa-lg"></i> '+
 			'<small> Walk to ' + deptStation + '</small>'+
 			'</span>'+
 			'<p>' + walks[i].distance + ' mins</p>'+
@@ -423,11 +412,13 @@ function processWalks(json) {
 	}
 
 function processRoutes(json) {
+	if (!json) return;
 	var routes = json.directionslist[0].routes;
 	
 	for (i = 0; i < routes.length; i++) {
 
 		var routetemplate = '<div id="route'+i+'" class="stage bus"><span class="directionsDisplayIcon directionsBusIcon"> \
+			<i class="iiii fa fa-car"></i> \
 			<small> Take the <%= routeId %>  Bus (<%= numOfStops %> Stops)</small> \
 			</span> <p><%= deptTime %> - <%= arrTime %></p> \
 			<p><i>Get off at: </i><%= arrStation %></p></div>';

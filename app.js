@@ -14,59 +14,6 @@ var baseURL = 'http://localhost:8888';
 var neo4jURL = 'http://localhost:7474/plugin';
 var debug = require('debug')('boa');
 
-
-
-
-
-// var item = [];
-// var routes = [];
-
-// $.getJSON( neo4jURL + "/routes/getall", function( data ) {
-//   $.each( data.routelist, function( key, val ) {
-//     $.getJSON( neo4jURL + val, function( datata ) {
-//       var from;
-//       var to;
-
-//       $.getJSON( neo4jURL + datata.from, function( datatabo ) {
-//         from = {
-//           id : datatabo.id,
-//           name : datatabo.name,
-//           lat : datatabo.latLon.lat,
-//           lon : datatabo.latLon.lon
-//         };
-//         console.log(from);
-//       });
-
-//       $.getJSON( neo4jURL+datata.towards, function( datatabo ) {
-//         to = {
-//           id : datatabo.id,
-//           name : datatabo.name,
-//           lat : datatabo.latLon.lat,
-//           lon : datatabo.latLon.lon
-//         };
-//       });
-
-//       item.push({
-//         id : datata.id,
-//         name : datata.line,
-//         from : from,
-//         toward : to
-//       });
-
-//     });
-//   });
-// });
-
-// mettere id 
-
-// var item = [];
-// var x = $('#start').val();
-
-// $.getJSON( "http://nominatim.openstreetmap.org/search?format=json&q=" + x, function( data ) {
-//   console.log(data[0].lat,data[0].lon)
-// });
-
-
 // Configuration
 
 app.configure(function(){

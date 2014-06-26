@@ -1,10 +1,10 @@
-(function (w, L) {
+(function (w,L) {
 
 var baseURL = 'http://localhost:8888';
 
 // create a map in the "map" div, set the view to a given place and zoom
 var map = L.map("map", {zoomControl: false});
-
+mappa = map;
 // create the tile layer with correct attribution
 var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 var osmAttrib='Map data © OpenStreetMap contributors';
@@ -20,18 +20,20 @@ var RedIcon = L.Icon.Default.extend({
 var redIcon = new RedIcon();
 
 // Extend the Default marker class - Bus stop icon
-var busStop = L.Icon.Default.extend({
+var BusStop = L.Icon.Default.extend({
 	options: {
 		iconUrl: 'img/busStop.png',
-		// iconSize:     [21, 75], // size of the icon
+		iconSize:     [41, 46], // size of the icon
 	}
 });
-var busStop = new busStop();
+var busStop = new BusStop();
+busSop = busStop;
 
 // Extend the Default marker class - Start icon
 var startIcon = L.Icon.Default.extend({
 	options: {
 		iconUrl: 'img/startIcon.png',
+		iconSize:     [41, 44], // size of the icon
 	}
 });
 var startIcon = new startIcon();
@@ -40,9 +42,11 @@ var startIcon = new startIcon();
 var endIcon = L.Icon.Default.extend({
 	options: {
 		iconUrl: 'img/endIcon.png',
+		iconSize:     [41, 44], // size of the icon
 	}
 });
 var endIcon = new endIcon();
+
 
 
 // start the map in l'aquila
@@ -83,85 +87,91 @@ function onLocationFound(e) {
 map.on('locationfound', onLocationFound);
 
 
-
+//show start and end 
 layerTrip=undefined;
+layerTripUno=undefined;
+layerTripDue=undefined;
 markersTrip = [];
-//mostra la partenza 
-fromto = function() {
-	var that = this;
-	var URL = 'http://nominatim.openstreetmap.org/search?q=';
-   	var val = this.value.replace(" ","%20");
-   	var citta = ',+laquila';
-  	var format = 'json';
-    $.getJSON(URL + val + citta + "&format=" + format, function( nomi ) {
-    	if(typeof layerTrip !== 'undefined') map.removeLayer(layerTrip);	
-		var via_lat = (nomi[0].lat);
-		var via_lon = (nomi[0].lon);
-		if (that.id == 'nominatim1') {
-			markersTrip[0] = L.marker([via_lat, via_lon],{icon:startIcon,draggable:true});
+draw = function(lat1,lon1,lat2,lon2) {
+	if(typeof stopLayer !== 'undefined') map.removeLayer(stopLayer);
+	if(typeof line !== 'undefined') map.removeLayer(line);
 
-			markersTrip[0].on('dragend', function(event) {
+    if(typeof layerTripUno !== 'undefined') map.removeLayer(layerTripUno);
+	if(typeof layerTripDue !== 'undefined') map.removeLayer(layerTripDue);
+
+    if (!lat1) return;
+    markersTripUno = []
+	markersTripUno[0] = L.marker([lat1, lon1],{icon:startIcon,draggable:true});
+				
+			markersTripUno[0].on('dragend', function(event) {
 			    var marker = event.target;  // you could also simply access the marker through the closure
 			    start = marker.getLatLng();  // but using the passed event is cleaner
-			    // console.log(start.lat);
-			    // console.log(start.lng);
+
 				var URL = 'http://nominatim.openstreetmap.org/reverse?';
 			  	var format = 'json';
 	   			$.getJSON(URL + "&format=" + format + "&lat=" + start.lat + "&lon=" + start.lng, function( reverse ){
 	   				nominatim1.value = reverse.address.road;
 	   			});
+	   			setTimeout(searchgo,1000);
 			});
-		} 
-		if(that.id == 'nominatim2'){
-			markersTrip[1] = L.marker([via_lat, via_lon],{icon:endIcon,draggable:true});
 
-					markersTrip[1].on('dragend', function(event) {
-				    var marker = event.target;  // you could also simply access the marker through the closure
-				    end = marker.getLatLng();  // but using the passed event is cleaner
-				    // console.log(end.lat);
-				    // console.log(end.lng);
-					var URL = 'http://nominatim.openstreetmap.org/reverse?';
-				  	var format = 'json';
-		   			$.getJSON(URL + "&format=" + format + "&lat=" + end.lat + "&lon=" + end.lng, function( reverse ){
-			   			nominatim2.value = reverse.address.road;
-			   		});
-					});
+	layerTripUno = L.layerGroup(markersTripUno).addTo(map);
 
+	markersTripDue = []
+	markersTripDue[0] = L.marker([lat2, lon2],{icon:endIcon,draggable:true});
 
-			};
-		layerTrip = L.layerGroup(markersTrip).addTo(map);
-		// layerTrip.addTo(map);
-	});
-};
+			markersTripDue[0].on('dragend', function(event) {
+				var marker = event.target;  // you could also simply access the marker through the closure
+				end = marker.getLatLng();  // but using the passed event is cleaner
 
+				var URL = 'http://nominatim.openstreetmap.org/reverse?';
+				var format = 'json';
+		   		$.getJSON(URL + "&format=" + format + "&lat=" + end.lat + "&lon=" + end.lng, function( reverse ){
+			   		nominatim2.value = reverse.address.road;
+			   	});
+			   	setTimeout(searchgo,1000);
+			});
 
+	layerTripDue = L.layerGroup(markersTripDue).addTo(map);
+	};
 
+// create the bus route
 stopLayer=undefined;
 line=undefined;
 showRoute = function(data) {
-
+	if(typeof layerTripUno !== 'undefined') map.removeLayer(layerTripUno);
+	if(typeof layerTripDue !== 'undefined') map.removeLayer(layerTripDue);
 	if(typeof stopLayer !== 'undefined') map.removeLayer(stopLayer);
 	if(typeof line !== 'undefined') map.removeLayer(line);
+	for (i in polis) {
+		map.removeLayer(polis[i]);
+	}
+	if(typeof markeris !== 'undefined') mappa.removeLayer(markeris);
+	polis = [];
 
-	var markers = [];
-	// 			$.each( data.routelist, function( key, val ) {
-	// 							markers [key] = L.marker([data.routelist[key].latLon.lat, data.routelist[key].latLon.lon],{
-	// 							icon:busStop, title : data.routelist[key].stopId, alt : data.routelist[key].stopName });
-	// 				});
-	
+	var markers = [];	
+	var marker = data.routelist;
+	var linePts = [];
 
-var marker = data.routelist;
-var linePts = [];
 	for (var it in marker) {
-		// console.log([data.routelist[it].latLon.lat,data.routelist[it].latLon.lon]);
 		linePts[it] = [data.routelist[it].latLon.lat,data.routelist[it].latLon.lon];
 	}
 
 	for( i=0; i < linePts.length; i=i+1 ) {
 	    // turn this coordinate into a LatLng
-	  linePts[i] = new L.LatLng( linePts[ i ][ 0 ], linePts[ i ][ 1 ] );
+	 	linePts[i] = new L.LatLng( linePts[ i ][ 0 ], linePts[ i ][ 1 ] );
+	 	if (i == 0) {
 	 		markers [i] = L.marker([linePts[ i ].lat, linePts[ i ].lng],{
-			icon:busStop});
+	 			icon:endIcon});	
+	 	} else if (i == linePts.length-1) {
+	 		markers [i] = L.marker([linePts[ i ].lat, linePts[ i ].lng],{
+	 			icon:startIcon});
+ 		} else {
+ 			markers [i] = L.marker([linePts[ i ].lat, linePts[ i ].lng],{
+	 			icon:busStop});
+ 		}
+	 	
+		
 	}
 
 	// add the line
@@ -175,27 +185,45 @@ var linePts = [];
 	// zoom the map to the polyline
 	map.fitBounds(line.getBounds());
 }
+
+polis = [];
+function processLine(json) {
+	if(typeof stopLayer !== 'undefined') map.removeLayer(stopLayer);
+	if(typeof line !== 'undefined') map.removeLayer(line);
+
+	var walks = json.directionslist[0].walks;
+	var routes = json.directionslist[0].routes;
+	var poli = undefined;
+	for (i = 0; i < walks.length; i++) {
+		var linePts = [];
+		linePts[0] = new L.LatLng( walks[ i ].latLon[ 0 ].lat, walks[ i ].latLon[ 0 ].lon );
+		linePts[1] = new L.LatLng( walks[ i ].latLon[ 1 ].lat, walks[ i ].latLon[ 1 ].lon );
+
+		poli = new L.Polyline( linePts, { color: 'rgb(31, 177, 154)', weight: 5, opacity: .7 } );
+		polis[polis.length] = poli;
+
+		
+
+
+	}
+
+}
 	
 
 map.addLayer(osm);
 
+// add control zoom to map
 map.addControl( L.control.zoom({position: 'topright'}) );
 
-
-// map.addControl( L.myIcon('icon', {position: 'topright'}) );
-
-
-
-// create the logo BusOnAir on the right
+// create the logo BusOnAir and add it on the right
 var logo = L.control({position: 'bottomright'});
 
 logo.onAdd = function (map) {
-var div = L.DomUtil.create('div', 'info legend');
+	var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML +=
     '<img src="img/BusOnAir.png" alt="legend" width="200" height="54">';
-return div;
-};
-
+	return div;
+	};
 logo.addTo(map);
 
 

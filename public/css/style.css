@@ -149,11 +149,11 @@ aside .size-toggle {
   -moz-box-shadow: 0 1px 0 #34364a;
   -webkit-box-shadow: 0 1px 0 #34364a;
 }
-@media (max-width: 868px) {
+/*@media (max-width: 868px) {
   aside .size-toggle {
     display: none;
   }
-}
+}*/
 aside .size-toggle .btn {
   background-color: transparent;
   color: #e6f1f7;
@@ -398,13 +398,25 @@ aside .main-menu > ul > li .dropdown-menu {
 }
 @media (min-width: 768px) {
   aside .main-menu > ul > li .dropdown-menu {
-    /*right: -160px;*/
-/*    left: auto;
-    top: -5px;*/
+    right: -160px;
+    left: auto;
+    top: -5px;<div class="size-toggle">
+          <a class="btn btn-sm" id="sizeToggle">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+        </div>
   }
 }
 @media (max-width: 767px) {
-  aside .main-menu > ul > li .dropdown-menu {
+  aside .main-menu > ul > li .dropdown-<div class="size-toggle">
+          <a class="btn btn-sm" id="sizeToggle">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+        </div>menu {
     position: static;
     float: none;
     width: auto;
@@ -469,15 +481,18 @@ aside .main-menu .alert {
   -ms-animation: fadeInUp 1.2s ease;
   -o-animation: fadeInUp 1.2s ease;
 }
+
 @media (max-width: 767px) {
   aside {
     left: -194px;
   }
 }
+
 @media (min-width: 768px) and (max-width: 868px) {
-  aside {
+  
+  /*aside {
     width: 90px;
-  }
+  }*/
   aside .brand .text-toggle {
     display: none;
   }
@@ -493,7 +508,7 @@ aside .main-menu .alert {
   aside .sidebar-inner {
     overflow: visible !important;
   }
-  aside .sidebar-inner .size-toggle {
+  /*aside .sidebar-inner .size-toggle {
     text-align: center;
   }
   aside .sidebar-inner .size-toggle .pull-right {
@@ -510,25 +525,26 @@ aside .main-menu .alert {
   }
   aside .sidebar-inner .search-block {
     display: none;
-  }
-  aside .sidebar-inner .main-menu > ul > li > a {
+  }*/
+  /*aside .sidebar-inner .main-menu > ul > li > a {
     text-align: center;
     font-size: 11px;
-  }
-  aside .sidebar-inner .main-menu > ul > li > a .menu-icon {
+  }*/
+  /*aside .sidebar-inner .main-menu > ul > li > a .menu-icon {
     display: block;
-  }
-  aside .sidebar-inner .main-menu > ul > li > a .text {
+  }*/
+  /*aside .sidebar-inner .main-menu > ul > li > a .text {
     display: block;
     margin-top: 5px;
     margin-left: 0;
-  }
-  aside .sidebar-inner .main-menu > ul > li > a .badge {
+  }*/
+  /*aside .sidebar-inner .main-menu > ul > li > a .badge {
     display: none;
-  }
-  aside .sidebar-inner .alert {
+  }*/
+  /*aside .sidebar-inner .alert {
     display: none;
-  }
+  }*/
+  
 }
 #wrapper {
   position: relative;
@@ -748,15 +764,21 @@ ul {
   -o-transition: all 1s ease;
 }
 
+.extended {
+  margin-top: 5px !important; 
+  padding-left: 30px !important;
+  padding-right: 30px !important;
+  margin-left: 24px !important;
+}
+
 #map { 
     width: 100%;
     height:100%;
     position: fixed;
 }
+
 .leaflet-bottom { 
-
     margin-bottom: 45px;
-
 }
 
 .form-control.input-sm {
@@ -778,13 +800,14 @@ body{
 }
 
 .form-group {
-  margin-left: 25px;
+  margin-left: 30px;
   margin-right: 25px;
 }
 
 .search-block p{
   padding-left: 20px;
 }
+
 #myline > li.li-search.disable-route {
   display: none;
 }
@@ -797,9 +820,14 @@ body{
  ***************************************************************************/
 
 #statusPanel p {
-  border: 1px solid #BBBBBB;
-  padding: 5px;
-  color: red;
+  border: 3px solid rgb(137, 156, 185);
+  text-align: center;
+  color: #1FB19A;
+}
+
+#statusPanel.error {
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
 /* Directions Panel
@@ -807,16 +835,7 @@ body{
 
 
 .stage {
-  margin: 0 30px 0 20px;
-}
-
-.stage:hover {
-  background: #F3F3F3;
-  cursor:pointer;
-  cursor:hand;
-}
-
-ui-state-hover{
+  margin: 0 13px 0 10px;
 }
 
 .stage:active {
@@ -824,7 +843,7 @@ ui-state-hover{
 }
 
 .walk {
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 3px;
   border-left: 8px solid #1FB19A;
 }
 
@@ -837,10 +856,11 @@ ui-state-hover{
 .walk p {
   padding: 5px 0px 5px 20px;
   font-size: 14px;
+  color: #CCB3B3;  
 }
 
 .bus {
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 3px;
   border-left: 8px solid #007EFF;
 }
 
@@ -853,74 +873,37 @@ ui-state-hover{
 .bus p {
   padding: 5px 0px 5px 20px;
   font-size: 14px;
+  color: #CCB3B3;
 }
 
-/* Direction Tabs
- ***************************************************************************/
-
-#tabstitle p {
-  float: left;
-  padding: 0;
+#indicazioni {
+  display: none; 
+}
+#indicazioni.activeblock>li  {
+  height: 0; 
 }
 
-.ui-tabs {
-  zoom: 1;
-}
-.ui-tabs .ui-tabs-nav {
-  list-style: none;
-  position: relative;
-  padding: 2px 2px 0;
-  overflow: hidden;
-  top: 1px;
-  height: 30px;
+#myline {
+  overflow-x: hidden;
+  max-height: 400px;
 }
 
-.ui-tabs .ui-tabs-nav li {
-  position: relative;
-  float: left;
-  border-top: 1px dashed #CCCCCC;
-  border-bottom-width: 0 !important;
-  margin: 0 5px -1px 5px;
-  background: #F3F3F3;
-}
-
-.ui-tabs .ui-tabs-nav li a {
-  float: left;
-  text-decoration: none;
-  padding: 5px 10px;
-  color: black;
-}
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-selected {
-  padding-bottom: 1px;
-  border-left: 1px dashed #CCCCCC;
-  border-right: 1px dashed #CCCCCC;
-  border-bottom-width: 0;
-  background: white;
-}
-
-.ui-tabs .ui-tabs-panel {
+.stage span small {
+  padding-left: 20px;
   display: block;
-  border-width: 0;
-  background: none;
-  border-top: 1px dashed #CCCCCC;
-  border-bottom: 1px dashed #CCCCCC;
-  position: relative;
-  min-height: 200px;
-  height: auto !important;
-  height: 200px;
-  padding: 10px;
+}
+.stage span .iiii {
+  display: inline-block;
+  float: left;
+  margin: 5px 0 0 0;
+  color: #FFFFFF;
 }
 
-.ui-tabs .ui-tabs-hide {
-  display: none !important;
-}
-
-.ui-tabs .ui-state-hover {
-  background: url("../images/ui-bg_glass_100_fdf5ce_1x400.html") repeat-x
-  scroll 50% 50% #FDF5CE;
-  border: 0px;
-  color: #333;
+#directionsPanel {
+  display: block;
+  max-height: 350px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 /*  Info
@@ -936,8 +919,8 @@ ui-state-hover{
 #about {
   margin: 0 10px 0 0px;
   list-style-type: none;
-  margin-left: 23px;
-  margin-right: 24px;
+  margin-left: 20px;
+  margin-right: 20px;
   background-color: rgb(137, 156, 185);
   border-radius: 5px;
 }
@@ -996,9 +979,12 @@ ui-state-hover{
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgb(137, 156, 185); 
 }
-
-#myline {
-  height: 300px;
-  overflow-x: hidden;
-  min-height: 450px;
+#containerSpin {
+  position: absolute;
+  background: rgba(0,0,0,0.4);
+  right: 0px;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  text-align:center;
 }
